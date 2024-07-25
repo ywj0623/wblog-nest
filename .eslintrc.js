@@ -5,7 +5,10 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: [
+    '@typescript-eslint/eslint-plugin',
+    '@stylistic/ts',
+  ],
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
@@ -22,5 +25,12 @@ module.exports = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/semi': ['error', 'never'],
+    '@stylistic/ts/object-curly-newline': ['error', {
+      'ObjectPattern': { 'multiline': true },
+      'ImportDeclaration': 'never',
+      'ExportDeclaration': 'never'
+    }],
+    '@stylistic/js/object-curly-spacing': ['error', 'always'],
+    '@stylistic/js/quotes': ['error', 'single']
   },
 };
