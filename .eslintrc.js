@@ -26,11 +26,12 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/semi': ['error', 'never'],
     '@stylistic/ts/object-curly-newline': ['error', {
+      // 'ObjectExpression': 'never',
       'ObjectPattern': { 'multiline': true },
       'ImportDeclaration': 'never',
       'ExportDeclaration': 'never'
     }],
-    '@stylistic/js/object-curly-spacing': ['error', 'always'],
-    '@stylistic/js/quotes': ['error', 'single']
+    '@stylistic/ts/object-curly-spacing': ['error', 'always'],
+    '@stylistic/ts/quotes': ['error', 'single']
   },
 };
