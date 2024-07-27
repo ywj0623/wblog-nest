@@ -5,7 +5,14 @@ import { MongooseModule } from '@nestjs/mongoose'
 import { BlogSchema } from './schemas/blog.schema'
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: 'Post', schema: BlogSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: 'Post',
+        schema: BlogSchema,
+      },
+    ]),
+  ],
   providers: [BlogService],
   controllers: [BlogController],
 })

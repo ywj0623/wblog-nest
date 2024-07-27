@@ -9,7 +9,8 @@ import {
   Body,
   Query,
   Put,
-  Delete,} from '@nestjs/common'
+  Delete,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { BlogService } from './blog.service'
 import { CreatePostDTO } from './dto/create-post.dto'
@@ -42,9 +43,10 @@ export class BlogController {
   @Post('/post')
   async addPost(@Res() res: Response, @Body() createPostDTO: CreatePostDTO) {
     const newPost = await this.blogService.addPost(createPostDTO)
-    return res
-      .status(HttpStatus.OK)
-      .json({ message: 'Post has been submitted successfully!', post: newPost })
+    return res.status(HttpStatus.OK).json({
+      message: 'Post has been submitted successfully!',
+      post: newPost,
+    })
   }
 
   @Put('/edit')
@@ -59,9 +61,10 @@ export class BlogController {
       throw new NotFoundException('Post does not exist!')
     }
 
-    return res
-      .status(HttpStatus.OK)
-      .json({ message: 'Post has been successfully updated', post: editedPost })
+    return res.status(HttpStatus.OK).json({
+      message: 'Post has been successfully updated',
+      post: editedPost,
+    })
   }
 
   @Delete('/delete')
@@ -75,8 +78,9 @@ export class BlogController {
       throw new NotFoundException('Post does not exist!')
     }
 
-    return res
-      .status(HttpStatus.OK)
-      .json({ message: 'Post has been deleted', post: deletedPost })
+    return res.status(HttpStatus.OK).json({
+      message: 'Post has been deleted',
+      post: deletedPost,
+    })
   }
 }

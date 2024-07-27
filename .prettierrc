@@ -3,6 +3,8 @@
   "trailingComma": "all",
   "semi": false,
   "bracketSpacing": true,
-  "singleAttributePerLine": false,
-  "printWidth": 160
+  "bracketSameLine": true,
+  "printWidth": 150,
+  "jsxBracketSameLine": true,
+  "endOfLine": "lf"
 }

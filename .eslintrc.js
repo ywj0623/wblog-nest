@@ -26,7 +26,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/semi': ['error', 'never'],
     '@stylistic/ts/object-curly-newline': ['error', {
-      // 'ObjectExpression': 'never',
+      'ObjectExpression': 'always',
       'ObjectPattern': { 'multiline': true },
       'ImportDeclaration': 'never',
       'ExportDeclaration': 'never'
