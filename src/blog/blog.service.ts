@@ -19,16 +19,14 @@ export class BlogService {
   }
 
   async addPost(createPostDTO: CreatePostDTO): Promise<Post> {
-    const newPost = await this.postModel(createPostDTO)
+    const newPost = await this.postModel.create(createPostDTO)
     return newPost.save()
   }
 
   async editPost(postId: number, createPostDTO: CreatePostDTO): Promise<Post> {
-    const editedPost = await this.postModel.findByIdAndUpdate(
-      postId,
-      createPostDTO,
-      { new: true },
-    )
+    const editedPost = await this.postModel.findByIdAndUpdate(postId, createPostDTO, {
+      new: true,
+    })
     return editedPost
   }
 
