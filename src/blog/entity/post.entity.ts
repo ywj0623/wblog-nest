@@ -8,12 +8,14 @@ import { IsString } from 'class-validator'
 export class Post extends Document {
   @Field((type) => String, {
     description: '文章 ID',
+    nullable: false,
   })
   _id: MongooseSchema.Types.ObjectId
 
   @Prop()
   @Field((type) => String, {
     description: '文章標題',
+    nullable: false,
   })
   @IsString()
   readonly title: string
@@ -21,6 +23,7 @@ export class Post extends Document {
   @Prop()
   @Field((type) => String, {
     description: '文章簡介',
+    nullable: true,
   })
   @IsString()
   readonly description?: string
@@ -28,6 +31,7 @@ export class Post extends Document {
   @Prop()
   @Field((type) => String, {
     description: '內文',
+    nullable: true,
   })
   @IsString()
   readonly body: string
@@ -35,6 +39,7 @@ export class Post extends Document {
   @Prop()
   @Field((type) => String, {
     description: '作者',
+    nullable: false,
   })
   @IsString()
   readonly author: string
@@ -42,8 +47,8 @@ export class Post extends Document {
   @Prop()
   @Field((type) => Date, {
     description: '刊登日',
+    nullable: false,
   })
-  @IsString()
   readonly date_posted: Date
 }
 

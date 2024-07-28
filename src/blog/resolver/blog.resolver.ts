@@ -10,7 +10,7 @@ export class BlogResolver {
   constructor(private readonly blogService: BlogService) {}
 
   @Query(() => [Post], {
-    name: 'posts',
+    name: 'allPost',
   })
   getPosts() {
     return this.blogService.getPosts()
@@ -28,17 +28,23 @@ export class BlogResolver {
     return this.blogService.getPost(id)
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => Post, {
+    name: 'addPost',
+  })
   addPost(@Args('createPostDTO') createPostDTO: CreatePostDTO) {
     return this.blogService.addPost(createPostDTO)
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => Post, {
+    name: 'editPost',
+  })
   editPost(@Args('updatePostDTO') updatePostDTO: UpdatePostDTO) {
     return this.blogService.editPost(updatePostDTO._id, updatePostDTO)
   }
 
-  @Mutation(() => Post)
+  @Mutation(() => Post, {
+    name: 'deletePost',
+  })
   deletePost(
     @Args('id', {
       type: () => String,
