@@ -9,46 +9,32 @@ import { Schema as MongooseSchema } from 'mongoose'
 export class BlogResolver {
   constructor(private readonly blogService: BlogService) {}
 
-  @Query(() => [Post], {
-    name: 'allPost',
-  })
+  @Query(() => [Post], { name: 'allPost' })
   getPosts() {
     return this.blogService.getPosts()
   }
 
-  @Query(() => Post, {
-    name: 'postById',
-  })
+  @Query(() => Post, { name: 'postById' })
   getPost(
-    @Args('id', {
-      type: () => String,
-    })
+    @Args('id', { type: () => String })
     id: MongooseSchema.Types.ObjectId,
   ) {
     return this.blogService.getPost(id)
   }
 
-  @Mutation(() => Post, {
-    name: 'addPost',
-  })
+  @Mutation(() => Post, { name: 'addPost' })
   addPost(@Args('createPostDTO') createPostDTO: CreatePostDTO) {
     return this.blogService.addPost(createPostDTO)
   }
 
-  @Mutation(() => Post, {
-    name: 'editPost',
-  })
+  @Mutation(() => Post, { name: 'editPost' })
   editPost(@Args('updatePostDTO') updatePostDTO: UpdatePostDTO) {
     return this.blogService.editPost(updatePostDTO._id, updatePostDTO)
   }
 
-  @Mutation(() => Post, {
-    name: 'deletePost',
-  })
+  @Mutation(() => Post, { name: 'deletePost' })
   deletePost(
-    @Args('id', {
-      type: () => String,
-    })
+    @Args('id', { type: () => String })
     id: MongooseSchema.Types.ObjectId,
   ) {
     return this.blogService.deletePost(id)

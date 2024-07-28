@@ -10,9 +10,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 
 import { BlogModule } from './blog/blog.module'
 
-@Module({
-  imports: [BlogModule],
-})
+@Module({ imports: [BlogModule] })
 export class APIModule {}
 
 @Module({
@@ -27,15 +25,11 @@ export class APIModule {}
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configServer: ConfigService) => {
-        const options: MongooseModuleOptions = {
-          uri: configServer.get<string>('DATABASE_URL'),
-        }
+        const options: MongooseModuleOptions = { uri: configServer.get<string>('DATABASE_URL') }
         return options
       },
     }),
-    ConfigModule.forRoot({
-      cache: true,
-    }),
+    ConfigModule.forRoot({ cache: true }),
     APIModule,
   ],
   controllers: [],

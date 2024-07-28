@@ -5,9 +5,7 @@ describe('BlogService', () => {
   let service: BlogService
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [BlogService],
-    }).compile()
+    const module: TestingModule = await Test.createTestingModule({ providers: [BlogService] }).compile()
 
     service = module.get<BlogService>(BlogService)
   })

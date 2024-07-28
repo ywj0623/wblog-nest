@@ -6,49 +6,31 @@ import { IsString } from 'class-validator'
 @Schema()
 @ObjectType()
 export class Post extends Document {
-  @Field((type) => String, {
-    description: '文章 ID',
-    nullable: false,
-  })
+  @Field((type) => String, { description: '文章 ID', nullable: false })
   _id: MongooseSchema.Types.ObjectId
 
   @Prop()
-  @Field((type) => String, {
-    description: '文章標題',
-    nullable: false,
-  })
+  @Field((type) => String, { description: '文章標題', nullable: false })
   @IsString()
   readonly title: string
 
   @Prop()
-  @Field((type) => String, {
-    description: '文章簡介',
-    nullable: true,
-  })
+  @Field((type) => String, { description: '文章簡介', nullable: true })
   @IsString()
   readonly description?: string
 
   @Prop()
-  @Field((type) => String, {
-    description: '內文',
-    nullable: true,
-  })
+  @Field((type) => String, { description: '內文', nullable: true })
   @IsString()
   readonly body: string
 
   @Prop()
-  @Field((type) => String, {
-    description: '作者',
-    nullable: false,
-  })
+  @Field((type) => String, { description: '作者', nullable: false })
   @IsString()
   readonly author: string
 
   @Prop()
-  @Field((type) => Date, {
-    description: '刊登日',
-    nullable: false,
-  })
+  @Field((type) => Date, { description: '刊登日', nullable: false })
   readonly date_posted: Date
 }
 

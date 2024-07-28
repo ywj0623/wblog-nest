@@ -25,9 +25,7 @@ export class BlogService {
   }
 
   async editPost(postId: MongooseSchema.Types.ObjectId, updatePostDTO: UpdatePostDTO): Promise<Post> {
-    const editedPost = await this.postModel.findByIdAndUpdate(postId, updatePostDTO, {
-      new: true,
-    })
+    const editedPost = await this.postModel.findByIdAndUpdate(postId, updatePostDTO, { new: true })
     return editedPost
   }
 
