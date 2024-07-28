@@ -2,6 +2,74 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Post {
+  """文章 ID"""
+  _id: String!
+
+  """文章標題"""
+  title: String!
+
+  """文章簡介"""
+  description: String!
+
+  """內文"""
+  body: String!
+
+  """作者"""
+  author: String!
+
+  """刊登日"""
+  date_posted: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type Query {
   getHello: String!
+  posts: [Post!]!
+  postById(id: String!): Post!
+}
+
+type Mutation {
+  addPost(createPostDTO: CreatePostDTO!): Post!
+  editPost(updatePostDTO: UpdatePostDTO!): Post!
+  deletePost(id: String!): Post!
+}
+
+input CreatePostDTO {
+  """文章標題"""
+  title: String!
+
+  """文章簡介"""
+  description: String!
+
+  """內文"""
+  body: String!
+
+  """作者"""
+  author: String!
+
+  """刊登日"""
+  date_posted: DateTime!
+}
+
+input UpdatePostDTO {
+  """文章標題"""
+  title: String
+
+  """文章簡介"""
+  description: String
+
+  """內文"""
+  body: String
+
+  """作者"""
+  author: String
+
+  """刊登日"""
+  date_posted: DateTime
+  _id: String!
 }

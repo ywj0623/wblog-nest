@@ -1,19 +1,20 @@
 import { Injectable } from '@nestjs/common'
-import { Model } from 'mongoose'
 import { InjectModel } from '@nestjs/mongoose'
-import { Post } from './interfaces/post.interface'
-import { CreatePostDTO } from './dto/create-post.dto'
+import { Model, Schema as MongooseSchema } from 'mongoose'
+import { CreatePostDTO } from './resolver/dto/createPost.dto'
+import { UpdatePostDTO } from './resolver/dto/updatePost.dto'
+import { Post, PostDocument } from './entity/post.entity'
 
 @Injectable()
 export class BlogService {
-  constructor(@InjectModel('Post') private readonly postModel: Model<Post>) {}
+  constructor(@InjectModel('Post') private readonly postModel: Model<PostDocument>) {}
 
   async getPosts(): Promise<Post[]> {
     const posts = await this.postModel.find().exec()
     return posts
   }
 
-  async getPost(postId: number): Promise<Post> {
+  async getPost(postId: MongooseSchema.Types.ObjectId): Promise<Post> {
     const post = await this.postModel.findById(postId).exec()
     return post
   }
@@ -23,14 +24,14 @@ export class BlogService {
     return newPost.save()
   }
 
-  async editPost(postId: number, createPostDTO: CreatePostDTO): Promise<Post> {
-    const editedPost = await this.postModel.findByIdAndUpdate(postId, createPostDTO, {
+  async editPost(postId: MongooseSchema.Types.ObjectId, updatePostDTO: UpdatePostDTO): Promise<Post> {
+    const editedPost = await this.postModel.findByIdAndUpdate(postId, updatePostDTO, {
       new: true,
     })
     return editedPost
   }
 
-  async deletePost(postId: number): Promise<Post> {
+  async deletePost(postId: MongooseSchema.Types.ObjectId): Promise<Post> {
     const deletedPost = this.postModel.findByIdAndDelete(postId)
     return deletedPost
   }

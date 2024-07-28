@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common'
 import { AppResolver } from './app.resolver'
 import { AppService } from './app.service'
-// import { MongooseModule } from '@nestjs/mongoose'
-// import { BlogModule } from './blog/blog.module'
-
 import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { join } from 'path'
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core'
 import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+
 import { BlogModule } from './blog/blog.module'
 
 @Module({
-  // imports: [MongooseModule.forRoot('mongodb://root:root@localhost:27017/'), BlogModule],
+  imports: [BlogModule],
+})
+export class APIModule {}
+
+@Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -34,7 +36,7 @@ import { BlogModule } from './blog/blog.module'
     ConfigModule.forRoot({
       cache: true,
     }),
-    BlogModule,
+    APIModule,
   ],
   controllers: [],
   providers: [AppService, AppResolver],
