@@ -23,13 +23,13 @@ export class BlogResolver {
   }
 
   @Mutation(() => Post, { name: 'addPost' })
-  addPost(@Args('createPostDTO') createPostDTO: CreatePostDTO) {
-    return this.blogService.addPost(createPostDTO)
+  addPost(@Args() args: CreatePostDTO) {
+    return this.blogService.addPost(args)
   }
 
   @Mutation(() => Post, { name: 'editPost' })
-  editPost(@Args('updatePostDTO') updatePostDTO: UpdatePostDTO) {
-    return this.blogService.editPost(updatePostDTO._id, updatePostDTO)
+  editPost(@Args() args: UpdatePostDTO) {
+    return this.blogService.editPost(args._id, args)
   }
 
   @Mutation(() => Post, { name: 'deletePost' })

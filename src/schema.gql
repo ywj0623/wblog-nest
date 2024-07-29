@@ -33,44 +33,27 @@ type Query {
 }
 
 type Mutation {
-  addPost(createPostDTO: CreatePostDTO!): Post!
+  addPost(
+    """文章標題"""
+    title: String!
+
+    """文章簡介"""
+    description: String
+
+    """內文"""
+    body: String
+
+    """作者"""
+    author: String!
+
+    """刊登日"""
+    date_posted: DateTime!
+  ): Post!
   editPost(updatePostDTO: UpdatePostDTO!): Post!
   deletePost(id: String!): Post!
 }
 
-input CreatePostDTO {
-  """文章標題"""
-  title: String!
-
-  """文章簡介"""
-  description: String
-
-  """內文"""
-  body: String
-
-  """作者"""
-  author: String!
-
-  """刊登日"""
-  date_posted: DateTime!
-}
-
 input UpdatePostDTO {
-  """文章標題"""
-  title: String
-
-  """文章簡介"""
-  description: String
-
-  """內文"""
-  body: String
-
-  """作者"""
-  author: String
-
-  """刊登日"""
-  date_posted: DateTime
-
   """文章 ID"""
   _id: String!
 }

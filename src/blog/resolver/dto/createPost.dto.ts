@@ -1,6 +1,6 @@
-import { InputType, Field } from '@nestjs/graphql'
+import { ArgsType, Field } from '@nestjs/graphql'
 
-@InputType()
+@ArgsType()
 export class CreatePostDTO {
   @Field((type) => String, { description: '文章標題', nullable: false })
   title: string
