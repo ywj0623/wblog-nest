@@ -7,7 +7,7 @@ import { Post, PostDocument } from 'src/entity/post.entity'
 
 @Injectable()
 export class PostService {
-  constructor(@InjectModel('Post') private readonly postModel: Model<PostDocument>) {}
+  constructor(@InjectModel(Post.name) private readonly postModel: Model<PostDocument>) {}
 
   async getPosts(): Promise<Post[]> {
     const posts = await this.postModel.find().exec()
