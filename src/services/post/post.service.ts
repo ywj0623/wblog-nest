@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model, Schema as MongooseSchema } from 'mongoose'
-import { CreatePostDTO } from './resolver/dto/createPost.dto'
-import { UpdatePostDTO } from './resolver/dto/updatePost.dto'
-import { Post, PostDocument } from './entity/post.entity'
+import { CreatePostDTO } from 'src/resolvers/post/dto/createPost.dto'
+import { UpdatePostDTO } from 'src/resolvers/post/dto/updatePost.dto'
+import { Post, PostDocument } from 'src/entity/post.entity'
 
 @Injectable()
-export class BlogService {
+export class PostService {
   constructor(@InjectModel('Post') private readonly postModel: Model<PostDocument>) {}
 
   async getPosts(): Promise<Post[]> {

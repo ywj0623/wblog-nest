@@ -1,17 +1,17 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
-import { BlogService } from '../blog.service'
-import { Post } from '../entity/post.entity'
+import { PostService } from 'src/services/post/post.service'
+import { Post } from 'src/entity/post.entity'
 import { CreatePostDTO } from './dto/createPost.dto'
 import { UpdatePostDTO } from './dto/updatePost.dto'
 import { Schema as MongooseSchema } from 'mongoose'
 
 @Resolver(() => Post)
-export class BlogResolver {
-  constructor(private readonly blogService: BlogService) {}
+export class PostResolver {
+  constructor(private readonly postService: PostService) {}
 
   @Query(() => [Post], { name: 'allPost' })
   getPosts() {
-    return this.blogService.getPosts()
+    return this.postService.getPosts()
   }
 
   @Query(() => Post, { name: 'postById' })
@@ -19,17 +19,17 @@ export class BlogResolver {
     @Args('id', { type: () => String })
     id: MongooseSchema.Types.ObjectId,
   ) {
-    return this.blogService.getPost(id)
+    return this.postService.getPost(id)
   }
 
   @Mutation(() => Post, { name: 'addPost' })
   addPost(@Args() args: CreatePostDTO) {
-    return this.blogService.addPost(args)
+    return this.postService.addPost(args)
   }
 
   @Mutation(() => Post, { name: 'editPost' })
   editPost(@Args() args: UpdatePostDTO) {
-    return this.blogService.editPost(args._id, args)
+    return this.postService.editPost(args._id, args)
   }
 
   @Mutation(() => Post, { name: 'deletePost' })
@@ -37,6 +37,6 @@ export class BlogResolver {
     @Args('id', { type: () => String })
     id: MongooseSchema.Types.ObjectId,
   ) {
-    return this.blogService.deletePost(id)
+    return this.postService.deletePost(id)
   }
 }

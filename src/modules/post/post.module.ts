@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common'
-import { BlogService } from './blog.service'
-import { BlogResolver } from './resolver/blog.resolver'
+import { PostService } from 'src/services/post/post.service'
+import { PostResolver } from 'src/resolvers/post/post.resolver'
 import { MongooseModule } from '@nestjs/mongoose'
-import { PostSchema } from './entity/post.entity'
+import { PostSchema } from 'src/entity/post.entity'
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ import { PostSchema } from './entity/post.entity'
       },
     ]),
   ],
-  providers: [BlogService, BlogResolver],
+  providers: [PostService, PostResolver],
   controllers: [],
 })
-export class BlogModule {}
+export class PostModule {}
