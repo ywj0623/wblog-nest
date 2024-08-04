@@ -9,8 +9,10 @@ import { MongooseModule, MongooseModuleOptions } from '@nestjs/mongoose'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 
 import { PostModule } from 'src/modules/post/post.module'
+import { UserModule } from 'src/modules/user/user.module'
+import { AuthModule } from 'src/modules/auth/auth.module'
 
-@Module({ imports: [PostModule] })
+@Module({ imports: [PostModule, UserModule, AuthModule] })
 export class APIModule {}
 
 @Module({

@@ -27,6 +27,20 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type User {
+  """使用者 ID"""
+  _id: String!
+
+  """使用者名稱"""
+  username: String!
+
+  """email"""
+  email: String!
+
+  """密碼"""
+  password: String!
+}
+
 type Query {
   allPost: [Post!]!
   postById(id: String!): Post!
@@ -69,4 +83,14 @@ type Mutation {
     _id: String!
   ): Post!
   deletePost(id: String!): Post!
+  signup(
+    """使用者名稱"""
+    username: String!
+
+    """email"""
+    email: String!
+
+    """密碼"""
+    password: String!
+  ): User!
 }
