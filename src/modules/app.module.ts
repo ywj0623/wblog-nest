@@ -23,6 +23,7 @@ export class APIModule {}
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault() as any],
       cors: true,
+      context: ({ req }) => ({ req }),
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
