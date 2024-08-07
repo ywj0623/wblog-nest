@@ -5,13 +5,19 @@ import { UserPayload } from 'src/common/decorators/userPayload.decorator'
 import { User } from 'src/entity/user.entity'
 import { UserService } from 'src/services/user/user.service'
 import { CreateUserDTO } from 'src/resolvers/user/dto/createUser.dto'
-import { UserPayloadDTO } from './dto/user.dto'
+import { LoginResponseDTO, UserPayloadDTO } from './dto/user.dto'
+import { ConfigService } from '@nestjs/config'
+import { JwtUtil } from 'src/common/utils/jwt.util'
 
 @Resolver(() => User)
 export class AuthResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private configService: ConfigService,
+    private jwtUtil: JwtUtil,
+    private readonly userService: UserService,
+  ) {}
 
-  @Mutation(() => User, { name: 'signup' })
+  @Mutation(() => LoginResponseDTO, { name: 'signup' })
   async signup(@Args() args: CreateUserDTO) {
     const { username, email } = args
     const isExist = await this.userService.isExistUser(username, email)
@@ -21,12 +27,29 @@ export class AuthResolver {
       throw new BadRequestException(message)
     }
 
-    return this.userService.createUser(args)
+    const newUser = await this.userService.createUser(args)
+    const token = this.jwtUtil.generateToken(newUser)
+
+    return {
+      token,
+      user: newUser,
+    }
   }
 
   @UseGuards(GqlAuthGuard)
-  @Mutation(() => User, { name: 'signin' })
-  signin(@Args('username') username: string, @Args('password') password: string, @UserPayload() user: UserPayloadDTO) {
-    return user
+  @Mutation(() => LoginResponseDTO, { name: 'login' })
+  login(@Args('username') username: string, @Args('password') password: string, @UserPayload() user: UserPayloadDTO) {
+    const secret = this.configService.get<string>('secret.jwt')
+
+    if (!secret) {
+      throw new Error('Jwt secret is not defined')
+    }
+
+    const token = this.jwtUtil.generateToken(user)
+
+    return {
+      token,
+      user: user,
+    }
   }
 }

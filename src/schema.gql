@@ -41,6 +41,11 @@ type User {
   password: String!
 }
 
+type LoginResponseDTO {
+  token: String!
+  user: User!
+}
+
 type Query {
   allPost: [Post!]!
   postById(id: String!): Post!
@@ -92,6 +97,6 @@ type Mutation {
 
     """密碼"""
     password: String!
-  ): User!
-  signin(username: String!, password: String!): User!
+  ): LoginResponseDTO!
+  login(username: String!, password: String!): LoginResponseDTO!
 }
