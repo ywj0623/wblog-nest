@@ -5,7 +5,7 @@ import { StaticData } from 'src/entity/staticData.entity'
 import { Schema } from 'mongoose'
 import { BadRequestException } from '@nestjs/common'
 
-@Resolver()
+@Resolver(() => StaticData)
 export class StaticDataResolver {
   constructor(private readonly staticDataService: StaticDataService) {}
 
