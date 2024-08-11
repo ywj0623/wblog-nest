@@ -11,9 +11,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config'
 import { PostModule } from 'src/modules/post/post.module'
 import { UserModule } from 'src/modules/user/user.module'
 import { AuthModule } from 'src/modules/auth/auth.module'
+import { StaticDataModule } from './staticData/staticData.module'
 import jwtConfig from 'src/config/jwt.config'
 
-@Module({ imports: [PostModule, UserModule, AuthModule] })
+@Module({ imports: [PostModule, UserModule, AuthModule, StaticDataModule] })
 export class APIModule {}
 
 @Module({

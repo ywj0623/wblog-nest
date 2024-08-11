@@ -2,6 +2,20 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type StaticData {
+  """資料分類"""
+  type: String!
+
+  """識別 Key"""
+  key: String!
+
+  """顯示值"""
+  value: String!
+
+  """備註"""
+  description: String!
+}
+
 type Post {
   """文章 ID"""
   _id: String!
@@ -11,6 +25,12 @@ type Post {
 
   """文章簡介"""
   description: String
+
+  """分類"""
+  category: String!
+
+  """文章狀態"""
+  status: String!
 
   """內文"""
   body: String
@@ -47,8 +67,11 @@ type LoginResponseDTO {
 }
 
 type Query {
-  allPost: [Post!]!
-  postById(id: String!): Post!
+  allPosts: [Post!]!
+  singlePostById(id: String!): Post!
+  postsByCategory(categoryKey: String!): [Post!]!
+  findByType(type: String!): [StaticData!]!
+  findByTypeAndKey(type: String!, key: String!): StaticData!
 }
 
 type Mutation {
@@ -99,4 +122,33 @@ type Mutation {
     password: String!
   ): LoginResponseDTO!
   login(username: String!, password: String!): LoginResponseDTO!
+  createStaticData(
+    """資料類別"""
+    type: String!
+
+    """識別 Key"""
+    key: String!
+
+    """顯示值"""
+    value: String!
+
+    """備註"""
+    description: String
+  ): StaticData!
+  updateStaticData(
+    """資料類別"""
+    type: String
+
+    """識別 Key"""
+    key: String
+
+    """顯示值"""
+    value: String
+
+    """備註"""
+    description: String
+
+    """分類 ID"""
+    _id: String!
+  ): StaticData!
 }
