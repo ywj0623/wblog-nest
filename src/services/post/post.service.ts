@@ -30,7 +30,7 @@ export class PostService {
     return posts.filter((post) => post.category)
   }
 
-  async addPost(createPostDTO: CreatePostDTO): Promise<Post> {
+  async createPost(createPostDTO: CreatePostDTO): Promise<Post> {
     const newPost = await this.postModel.create(createPostDTO)
     return newPost.save()
   }

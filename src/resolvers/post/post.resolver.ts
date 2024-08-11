@@ -14,10 +14,7 @@ export class PostResolver {
   }
 
   @Query(() => Post, { name: 'singlePostById' })
-  getPost(
-    @Args('id', { type: () => String })
-    id: MongooseSchema.Types.ObjectId,
-  ) {
+  getPost(@Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId) {
     return this.postService.getSinglePost(id)
   }
 
@@ -26,9 +23,9 @@ export class PostResolver {
     return this.postService.getPostsByCategory(categoryKey)
   }
 
-  @Mutation(() => Post, { name: 'addPost' })
-  addPost(@Args() args: CreatePostDTO) {
-    return this.postService.addPost(args)
+  @Mutation(() => Post, { name: 'createPost' })
+  createPost(@Args() args: CreatePostDTO) {
+    return this.postService.createPost(args)
   }
 
   @Mutation(() => Post, { name: 'editPost' })
@@ -37,10 +34,7 @@ export class PostResolver {
   }
 
   @Mutation(() => Post, { name: 'deletePost' })
-  deletePost(
-    @Args('id', { type: () => String })
-    id: MongooseSchema.Types.ObjectId,
-  ) {
+  deletePost(@Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId) {
     return this.postService.deletePost(id)
   }
 }
