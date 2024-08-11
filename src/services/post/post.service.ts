@@ -9,14 +9,26 @@ import { Post, PostDocument } from 'src/entity/post.entity'
 export class PostService {
   constructor(@InjectModel(Post.name) private readonly postModel: Model<PostDocument>) {}
 
-  async getPosts(): Promise<Post[]> {
+  async getAllPosts(): Promise<Post[]> {
     const posts = await this.postModel.find().exec()
     return posts
   }
 
-  async getPost(postId: MongooseSchema.Types.ObjectId): Promise<Post> {
+  async getSinglePost(postId: MongooseSchema.Types.ObjectId): Promise<Post> {
     const post = await this.postModel.findById(postId).exec()
     return post
+  }
+
+  async getPostsByCategory(categoryKey: string): Promise<Post[]> {
+    const posts = await this.postModel
+      .find()
+      .populate({
+        path: 'category',
+        match: { type: 'category', key: categoryKey },
+      })
+      .exec()
+
+    return posts.filter((post) => post.category)
   }
 
   async addPost(createPostDTO: CreatePostDTO): Promise<Post> {

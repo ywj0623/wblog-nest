@@ -9,17 +9,22 @@ import { Schema as MongooseSchema } from 'mongoose'
 export class PostResolver {
   constructor(private readonly postService: PostService) {}
 
-  @Query(() => [Post], { name: 'allPost' })
+  @Query(() => [Post], { name: 'allPosts' })
   getPosts() {
-    return this.postService.getPosts()
+    return this.postService.getAllPosts()
   }
 
-  @Query(() => Post, { name: 'postById' })
+  @Query(() => Post, { name: 'singlePostById' })
   getPost(
     @Args('id', { type: () => String })
     id: MongooseSchema.Types.ObjectId,
   ) {
-    return this.postService.getPost(id)
+    return this.postService.getSinglePost(id)
+  }
+
+  @Query(() => [Post], { name: 'postsByCategory' })
+  getPostByCategory(@Args('categoryKey') categoryKey: string) {
+    return this.postService.getPostsByCategory(categoryKey)
   }
 
   @Mutation(() => Post, { name: 'addPost' })
