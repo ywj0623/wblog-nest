@@ -1,8 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql'
 import { PostService } from 'src/services/post/post.service'
 import { Post } from 'src/entity/post.entity'
-import { CreatePostDTO } from './dto/createPost.dto'
-import { UpdatePostDTO } from './dto/updatePost.dto'
+import { CreatePostDTO, UpdatePostDTO } from './dto/post.dto'
 import { Schema as MongooseSchema } from 'mongoose'
 
 @Resolver(() => Post)

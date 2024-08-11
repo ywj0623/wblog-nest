@@ -3,7 +3,7 @@ import { IsString, IsEmail, MinLength, MaxLength } from 'class-validator'
 
 @ArgsType()
 export class CreateUserDTO {
-  @Field((type) => String, { description: '使用者名稱', nullable: false })
+  @Field((type) => String, { description: '帳號', nullable: false })
   @IsString()
   @MinLength(3)
   @MaxLength(20)

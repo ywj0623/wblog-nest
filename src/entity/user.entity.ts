@@ -11,10 +11,10 @@ export class User extends Document {
 
   @Prop({
     required: true,
-    minlength: 8,
+    minlength: 3,
     maxlength: 20,
   })
-  @Field((type) => String, { description: '使用者名稱', nullable: false })
+  @Field((type) => String, { description: '帳號', nullable: false })
   @IsString()
   username: string
 

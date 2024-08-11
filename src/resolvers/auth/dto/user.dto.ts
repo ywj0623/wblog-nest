@@ -9,7 +9,7 @@ export class UserPayloadDTO {
   @IsString()
   _id: MongooseSchema.Types.ObjectId
 
-  @Field((type) => String, { description: '使用者名稱', nullable: false })
+  @Field((type) => String, { description: '帳號', nullable: false })
   @IsString()
   @MinLength(3)
   @MaxLength(20)
