@@ -75,7 +75,7 @@ type Query {
 }
 
 type Mutation {
-  addPost(
+  createPost(
     """文章標題"""
     title: String!
 
@@ -141,7 +141,7 @@ type Mutation {
     """備註"""
     description: String
   ): StaticData!
-  updateStaticData(
+  editStaticData(
     """資料類別"""
     type: String
 
@@ -157,4 +157,5 @@ type Mutation {
     """分類 ID"""
     _id: String!
   ): StaticData!
+  deleteStaticData(id: String!): StaticData!
 }

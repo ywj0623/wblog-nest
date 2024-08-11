@@ -23,8 +23,13 @@ export class StaticDataService {
     return newStaticData.save()
   }
 
-  async update(id: Schema.Types.ObjectId, updateStaticDataDTO: UpdateStaticDataDTO): Promise<StaticData> {
-    const updatedData = await this.staticDataModel.findByIdAndUpdate(id, updateStaticDataDTO, { new: true })
-    return updatedData
+  async edit(id: Schema.Types.ObjectId, updateStaticDataDTO: UpdateStaticDataDTO): Promise<StaticData> {
+    const editedData = await this.staticDataModel.findByIdAndUpdate(id, updateStaticDataDTO, { new: true })
+    return editedData
+  }
+
+  async delete(id: Schema.Types.ObjectId): Promise<StaticData> {
+    const deletedData = await this.staticDataModel.findByIdAndDelete(id)
+    return deletedData
   }
 }
