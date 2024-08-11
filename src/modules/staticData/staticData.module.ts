@@ -14,6 +14,6 @@ import { StaticDataService } from 'src/services/staticData/staticData.service'
     ]),
   ],
   providers: [StaticDataService, StaticDataResolver],
-  exports: [StaticDataService],
+  exports: [StaticDataService, MongooseModule],
 })
 export class StaticDataModule {}

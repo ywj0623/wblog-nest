@@ -3,6 +3,7 @@ import { StaticDataService } from 'src/services/staticData/staticData.service'
 import { CreateStaticDataDTO, UpdateStaticDataDTO } from './dto/staticData.dto'
 import { StaticData } from 'src/entity/staticData.entity'
 import { Schema } from 'mongoose'
+import { BadRequestException } from '@nestjs/common'
 
 @Resolver()
 export class StaticDataResolver {
@@ -20,6 +21,13 @@ export class StaticDataResolver {
 
   @Mutation(() => StaticData, { name: 'createStaticData' })
   createStaticData(@Args() args: CreateStaticDataDTO) {
+    const { type, key: categoryKey } = args
+    const isExist = this.staticDataService.findByTypeAndKey(type, categoryKey)
+
+    if (isExist) {
+      throw new BadRequestException(`${categoryKey} is already existed in ${type}`)
+    }
+
     return this.staticDataService.create(args)
   }
 

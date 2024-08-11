@@ -69,7 +69,7 @@ type LoginResponseDTO {
 type Query {
   allPosts: [Post!]!
   singlePostById(id: String!): Post!
-  postsByCategory(categoryKey: String!): [Post!]!
+  postsByTypeAndKey(type: String!, categoryKey: String!): [Post!]!
   findByType(type: String!): [StaticData!]!
   findByTypeAndKey(type: String!, key: String!): StaticData!
 }
@@ -117,17 +117,6 @@ type Mutation {
     _id: String!
   ): Post!
   deletePost(id: String!): Post!
-  signup(
-    """帳號"""
-    username: String!
-
-    """email"""
-    email: String!
-
-    """密碼"""
-    password: String!
-  ): LoginResponseDTO!
-  login(username: String!, password: String!): LoginResponseDTO!
   createStaticData(
     """資料類別"""
     type: String!
@@ -158,4 +147,15 @@ type Mutation {
     _id: String!
   ): StaticData!
   deleteStaticData(id: String!): StaticData!
+  signup(
+    """帳號"""
+    username: String!
+
+    """email"""
+    email: String!
+
+    """密碼"""
+    password: String!
+  ): LoginResponseDTO!
+  login(username: String!, password: String!): LoginResponseDTO!
 }

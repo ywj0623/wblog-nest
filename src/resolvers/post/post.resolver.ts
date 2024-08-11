@@ -18,9 +18,9 @@ export class PostResolver {
     return this.postService.getSinglePost(id)
   }
 
-  @Query(() => [Post], { name: 'postsByCategory' })
-  getPostByCategory(@Args('categoryKey') categoryKey: string) {
-    return this.postService.getPostsByCategory(categoryKey)
+  @Query(() => [Post], { name: 'postsByTypeAndKey' })
+  getPostByTypeAndKey(@Args('type') type: string, @Args('categoryKey') categoryKey: string) {
+    return this.postService.getPostsByTypeAndKey(type, categoryKey)
   }
 
   @Mutation(() => Post, { name: 'createPost' })
