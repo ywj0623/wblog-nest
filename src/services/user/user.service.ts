@@ -11,17 +11,21 @@ export class UserService {
   constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
   public async createUser(dto: CreateUserDTO): Promise<User> {
-    const { username, email, password } = dto
+    const { email, password, confirmPassword } = dto
+
+    if (password !== confirmPassword) {
+      throw new Error('Password and confirm password do not match')
+    }
+
     const encrypted = await bcrypt.hash(password, 12)
     return this.userModel.create({
-      username,
       email,
       password: encrypted,
     })
   }
 
-  public async isExistUser(username: string, email: string): Promise<boolean> {
-    const exist = await this.userModel.exists({ $or: [{ username }, { email }] }).exec()
+  public async isExistUser(email: string): Promise<boolean> {
+    const exist = await this.userModel.exists({ $or: [{ email }] }).exec()
     return !!exist
   }
 

@@ -8,13 +8,13 @@ import { UserPayloadDTO } from 'src/resolvers/auth/dto/user.dto'
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
-      usernameField: 'username',
+      emailField: 'email',
       passwordField: 'password',
     })
   }
 
-  async validate(username: string, password: string): Promise<any> {
-    const user = await this.authService.validateUser(username, password)
+  async validate(email: string, password: string): Promise<any> {
+    const user = await this.authService.validateUser(email, password)
 
     if (!user) {
       throw new UnauthorizedException('Invalid credentials')
@@ -22,7 +22,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
     const payload: UserPayloadDTO = {
       _id: user._id,
-      username: user.username,
       email: user.email,
     }
 

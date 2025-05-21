@@ -7,8 +7,8 @@ import { User } from 'src/entity/user.entity'
 export class AuthService {
   constructor(private readonly userService: UserService) {}
 
-  public async validateUser(username: string, password: string): Promise<User> {
-    const user = await this.userService.findUser({ username })
+  public async validateUser(email: string, password: string): Promise<User> {
+    const user = await this.userService.findUser({ email })
 
     if (!user) {
       return null
