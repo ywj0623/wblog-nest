@@ -1,5 +1,5 @@
 import { BadRequestException, UseGuards } from '@nestjs/common'
-import { Args, Mutation, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { GqlAuthGuard } from 'src/common/guards/auth.guard'
 import { UserPayload } from 'src/common/decorators/userPayload.decorator'
 import { User } from 'src/entity/user.entity'
@@ -19,11 +19,11 @@ export class AuthResolver {
 
   @Mutation(() => LoginResponseDTO, { name: 'signup' })
   async signup(@Args() args: CreateUserDTO) {
-    const { username, email } = args
-    const isExist = await this.userService.isExistUser(username, email)
+    const { email } = args
+    const isExist = await this.userService.isExistUser(email)
 
     if (isExist) {
-      const message = 'username & email is already exists.'
+      const message = 'email is already exists.'
       throw new BadRequestException(message)
     }
 
@@ -38,7 +38,7 @@ export class AuthResolver {
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => LoginResponseDTO, { name: 'login' })
-  login(@Args('username') username: string, @Args('password') password: string, @UserPayload() user: UserPayloadDTO) {
+  login(@Args('email') email: string, @Args('password') password: string, @UserPayload() user: UserPayloadDTO) {
     const secret = this.configService.get<string>('secret.jwt')
 
     if (!secret) {

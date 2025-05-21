@@ -9,15 +9,6 @@ export class User extends Document {
   @Field((type) => String, { description: '使用者 ID', nullable: false })
   _id: MongooseSchema.Types.ObjectId
 
-  @Prop({
-    required: true,
-    minlength: 3,
-    maxlength: 20,
-  })
-  @Field((type) => String, { description: '帳號', nullable: false })
-  @IsString()
-  username: string
-
   @Prop({ required: true })
   @Field((type) => String, { description: 'email', nullable: false })
   @IsEmail()

@@ -6,9 +6,9 @@ import { GqlExecutionContext } from '@nestjs/graphql'
 export class GqlAuthGuard extends AuthGuard('local') {
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context)
-    const { username, password } = ctx.getArgs()
+    const { _id, email, password } = ctx.getArgs()
     const request = ctx.getContext().req
-    request.body = { username, password }
+    request.body = { _id, email, password }
     return request
   }
 }

@@ -1,5 +1,5 @@
 import { ArgsType, Field, ObjectType } from '@nestjs/graphql'
-import { IsString, MinLength, MaxLength, IsEmail } from 'class-validator'
+import { IsString, IsEmail } from 'class-validator'
 import { Schema as MongooseSchema } from 'mongoose'
 import { User } from 'src/entity/user.entity'
 
@@ -8,12 +8,6 @@ export class UserPayloadDTO {
   @Field((type) => String, { description: '使用者 ID' })
   @IsString()
   _id: MongooseSchema.Types.ObjectId
-
-  @Field((type) => String, { description: '帳號', nullable: false })
-  @IsString()
-  @MinLength(3)
-  @MaxLength(20)
-  username: string
 
   @Field((type) => String, { description: 'email' })
   @IsEmail()
