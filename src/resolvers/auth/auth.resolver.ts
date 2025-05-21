@@ -17,6 +17,12 @@ export class AuthResolver {
     private readonly userService: UserService,
   ) {}
 
+  @Query(() => Boolean, { name: 'findUser' })
+  async findUser(@Args('email') email: string) {
+    const exist = await this.userService.isExistUser(email)
+    return exist
+  }
+
   @Mutation(() => LoginResponseDTO, { name: 'signup' })
   async signup(@Args() args: CreateUserDTO) {
     const { email } = args
