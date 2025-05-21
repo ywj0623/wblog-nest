@@ -3,6 +3,9 @@ import { PostService } from 'src/services/post/post.service'
 import { Post } from 'src/entity/post.entity'
 import { CreatePostDTO, UpdatePostDTO } from './dto/post.dto'
 import { Schema as MongooseSchema } from 'mongoose'
+import { UseGuards } from '@nestjs/common'
+import { GqlAuthGuard } from 'src/common/guards/auth.guard'
+import { UserPayload } from 'src/common/decorators/userPayload.decorator'
 
 @Resolver(() => Post)
 export class PostResolver {
@@ -19,22 +22,38 @@ export class PostResolver {
   }
 
   @Query(() => [Post], { name: 'postsByTypeAndKey' })
-  getPostByTypeAndKey(@Args('type') type: string, @Args('categoryKey') categoryKey: string) {
+  getPostByTypeAndKey(
+    @Args('type') type: string,
+    @Args('categoryKey')
+    categoryKey: string,
+  ) {
     return this.postService.getPostsByTypeAndKey(type, categoryKey)
   }
 
   @Mutation(() => Post, { name: 'createPost' })
-  createPost(@Args() args: CreatePostDTO) {
-    return this.postService.createPost(args)
+  @UseGuards(GqlAuthGuard)
+  createPost(
+    @Args() args: CreatePostDTO,
+    @UserPayload() user: any, // Using any for user type for now
+  ) {
+    return this.postService.createPost(args, user.userId)
   }
 
   @Mutation(() => Post, { name: 'editPost' })
-  editPost(@Args() args: UpdatePostDTO) {
-    return this.postService.editPost(args._id, args)
+  @UseGuards(GqlAuthGuard)
+  editPost(
+    @Args() args: UpdatePostDTO,
+    @UserPayload() user: any, // Using any for user type
+  ) {
+    return this.postService.editPost(args._id, args, user.userId)
   }
 
   @Mutation(() => Post, { name: 'deletePost' })
-  deletePost(@Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId) {
-    return this.postService.deletePost(id)
+  @UseGuards(GqlAuthGuard)
+  deletePost(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+    @UserPayload() user: any, // Using any for user type
+  ) {
+    return this.postService.deletePost(id, user.userId)
   }
 }

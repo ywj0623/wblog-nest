@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common' // Added UnauthorizedException
 import { InjectModel } from '@nestjs/mongoose'
 import { Model, Schema as MongooseSchema } from 'mongoose'
 import { CreatePostDTO, UpdatePostDTO } from 'src/resolvers/post/dto/post.dto'
@@ -43,17 +43,36 @@ export class PostService {
     return this.postModel.find(query).populate('category').populate('status').exec()
   }
 
-  async createPost(createPostDTO: CreatePostDTO): Promise<Post> {
-    const newPost = await this.postModel.create(createPostDTO)
+  async createPost(createPostDTO: CreatePostDTO, userId: MongooseSchema.Types.ObjectId): Promise<Post> {
+    const newPost = await this.postModel.create({
+      ...createPostDTO,
+      author: userId, // Set author to the userId from the token
+    })
     return newPost.save()
   }
 
-  async editPost(postId: MongooseSchema.Types.ObjectId, updatePostDTO: UpdatePostDTO): Promise<Post> {
+  async editPost(postId: MongooseSchema.Types.ObjectId, updatePostDTO: UpdatePostDTO, userId: MongooseSchema.Types.ObjectId): Promise<Post> {
+    const post = await this.postModel.findById(postId)
+    if (!post) {
+      throw new NotFoundException('Post not found')
+    }
+    // Check if the user is the author of the post
+    if (post.author.toString() !== userId.toString()) {
+      throw new UnauthorizedException('You are not authorized to edit this post')
+    }
     const editedPost = await this.postModel.findByIdAndUpdate(postId, updatePostDTO, { new: true })
     return editedPost
   }
 
-  async deletePost(postId: MongooseSchema.Types.ObjectId): Promise<Post> {
+  async deletePost(postId: MongooseSchema.Types.ObjectId, userId: MongooseSchema.Types.ObjectId): Promise<Post> {
+    const post = await this.postModel.findById(postId)
+    if (!post) {
+      throw new NotFoundException('Post not found')
+    }
+    // Check if the user is the author of the post
+    if (post.author.toString() !== userId.toString()) {
+      throw new UnauthorizedException('You are not authorized to delete this post')
+    }
     const deletedPost = this.postModel.findByIdAndDelete(postId)
     return deletedPost
   }
