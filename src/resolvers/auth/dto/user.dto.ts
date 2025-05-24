@@ -5,11 +5,11 @@ import { User } from 'src/entity/user.entity'
 
 @ArgsType()
 export class UserPayloadDTO {
-  @Field((type) => String, { description: '使用者 ID' })
+  @Field(() => String, { description: '使用者 ID' })
   @IsString()
   _id: MongooseSchema.Types.ObjectId
 
-  @Field((type) => String, { description: 'email' })
+  @Field(() => String, { description: 'email' })
   @IsEmail()
   @IsString()
   email: string
@@ -17,10 +17,10 @@ export class UserPayloadDTO {
 
 @ObjectType()
 export class LoginResponseDTO {
-  @Field((type) => String)
+  @Field(() => String)
   @IsString()
   token: string
 
-  @Field((type) => User)
+  @Field(() => User)
   user: User
 }

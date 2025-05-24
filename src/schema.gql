@@ -16,6 +16,17 @@ type StaticData {
   description: String!
 }
 
+type User {
+  """使用者 ID"""
+  _id: String!
+
+  """email"""
+  email: String!
+
+  """密碼"""
+  password: String!
+}
+
 type Post {
   """文章 ID"""
   _id: String!
@@ -39,27 +50,16 @@ type Post {
   author: String!
 
   """刊登日"""
-  date_posted: DateTime!
+  date_created: DateTime!
+
+  """最後更新日"""
+  date_updated: DateTime
 }
 
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
-
-type User {
-  """使用者 ID"""
-  _id: String!
-
-  """帳號"""
-  username: String!
-
-  """email"""
-  email: String!
-
-  """密碼"""
-  password: String!
-}
 
 type LoginResponseDTO {
   token: String!
@@ -72,6 +72,7 @@ type Query {
   postsByTypeAndKey(type: String!, categoryKey: String!): [Post!]!
   findByType(type: String!): [StaticData!]!
   findByTypeAndKey(type: String!, key: String!): StaticData!
+  findUser(email: String!): Boolean!
 }
 
 type Mutation {
@@ -88,9 +89,6 @@ type Mutation {
     """內文"""
     body: String
 
-    """作者"""
-    author: String!
-
     """刊登日"""
     date_posted: DateTime!
   ): Post!
@@ -106,9 +104,6 @@ type Mutation {
 
     """內文"""
     body: String
-
-    """作者"""
-    author: String
 
     """刊登日"""
     date_posted: DateTime
@@ -148,14 +143,14 @@ type Mutation {
   ): StaticData!
   deleteStaticData(id: String!): StaticData!
   signup(
-    """帳號"""
-    username: String!
-
     """email"""
     email: String!
 
     """密碼"""
     password: String!
+
+    """確認密碼"""
+    confirmPassword: String!
   ): LoginResponseDTO!
-  login(username: String!, password: String!): LoginResponseDTO!
+  login(email: String!, password: String!): LoginResponseDTO!
 }

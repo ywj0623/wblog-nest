@@ -23,6 +23,6 @@ export class CreatePostDTO {
 
 @ArgsType()
 export class UpdatePostDTO extends PartialType(CreatePostDTO) {
-  @Field({ description: '文章 ID', nullable: false })
+  @Field(() => String, { description: '文章 ID', nullable: false })
   _id: MongooseSchema.Types.ObjectId
 }

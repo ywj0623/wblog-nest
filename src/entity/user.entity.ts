@@ -6,16 +6,16 @@ import { IsEmail, IsString } from 'class-validator'
 @Schema()
 @ObjectType()
 export class User extends Document {
-  @Field((type) => String, { description: '使用者 ID', nullable: false })
+  @Field(() => String, { description: '使用者 ID', nullable: false })
   _id: MongooseSchema.Types.ObjectId
 
   @Prop({ required: true })
-  @Field((type) => String, { description: 'email', nullable: false })
+  @Field(() => String, { description: 'email', nullable: false })
   @IsEmail()
   email: string
 
   @Prop({ required: true })
-  @Field((type) => String, { description: '密碼', nullable: false })
+  @Field(() => String, { description: '密碼', nullable: false })
   @IsString()
   password: string
 }
