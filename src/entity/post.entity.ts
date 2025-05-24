@@ -8,16 +8,16 @@ import { User } from './user.entity'
 @Schema({ timestamps: { createdAt: 'date_created', updatedAt: 'date_updated' } })
 @ObjectType()
 export class Post extends Document {
-  @Field({ description: '文章 ID', nullable: false })
+  @Field(() => String, { description: '文章 ID', nullable: false })
   _id: MongooseSchema.Types.ObjectId
 
   @Prop({ required: true })
-  @Field({ description: '文章標題', nullable: false })
+  @Field(() => String, { description: '文章標題', nullable: false })
   @IsString()
   readonly title: string
 
   @Prop()
-  @Field({ description: '文章簡介', nullable: true })
+  @Field(() => String, { description: '文章簡介', nullable: true })
   @IsString()
   readonly description?: string
 
@@ -26,7 +26,7 @@ export class Post extends Document {
     type: Types.ObjectId,
     ref: 'StaticData',
   })
-  @Field({ description: '分類', nullable: false })
+  @Field(() => String, { description: '分類', nullable: false })
   @IsString()
   readonly category: StaticData
 
@@ -36,23 +36,23 @@ export class Post extends Document {
     type: Types.ObjectId,
     ref: 'StaticData',
   })
-  @Field({ description: '文章狀態', nullable: false })
+  @Field(() => String, { description: '文章狀態', nullable: false })
   @IsString()
   readonly status: StaticData
 
   @Prop({ required: true })
-  @Field({ description: '內文', nullable: true })
+  @Field(() => String, { description: '內文', nullable: true })
   @IsJSON()
   readonly body: string
 
   @Prop({ required: true, type: MongooseSchema.Types.ObjectId, ref: 'User' })
-  @Field({ description: '作者 ID', nullable: false })
+  @Field(() => String, { description: '作者', nullable: false })
   author: User
 
-  @Field({ description: '刊登日', nullable: false })
+  @Field(() => Date, { description: '刊登日', nullable: false })
   date_created: Date
 
-  @Field({ description: '最後更新日', nullable: true })
+  @Field(() => Date, { description: '最後更新日', nullable: true })
   date_updated?: Date
 }
 
