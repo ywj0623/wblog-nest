@@ -72,7 +72,7 @@ type Query {
   postsByTypeAndKey(type: String!, categoryKey: String!): [Post!]!
   findByType(type: String!): [StaticData!]!
   findByTypeAndKey(type: String!, key: String!): StaticData!
-  findUser(email: String!): Boolean!
+  checkEmail(email: String!): Boolean!
 }
 
 type Mutation {

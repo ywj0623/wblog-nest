@@ -17,8 +17,8 @@ export class AuthResolver {
     private readonly userService: UserService,
   ) {}
 
-  @Query(() => Boolean, { name: 'findUser' })
-  async findUser(@Args('email') email: string) {
+  @Query(() => Boolean, { name: 'checkEmail' })
+  async checkEmail(@Args('email') email: string) {
     const exist = await this.userService.isExistUser(email)
     return exist
   }
