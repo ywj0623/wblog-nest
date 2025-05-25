@@ -6,9 +6,15 @@ import { GqlExecutionContext } from '@nestjs/graphql'
 export class GqlAuthGuard extends AuthGuard('local') {
   getRequest(context: ExecutionContext) {
     const ctx = GqlExecutionContext.create(context)
-    const { _id, email, password } = ctx.getArgs()
+    const args = ctx.getArgs()
     const request = ctx.getContext().req
-    request.body = { _id, email, password }
+
+    // 將 GraphQL 的參數轉換為 passport-local 期望的格式
+    request.body = {
+      email: args.email,
+      password: args.password,
+    }
+
     return request
   }
 }

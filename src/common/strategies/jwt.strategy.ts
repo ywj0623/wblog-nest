@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common'
 import { PassportStrategy } from '@nestjs/passport'
-import { Strategy } from 'passport-local'
+import { Strategy, ExtractJwt } from 'passport-jwt'
 import { ConfigService } from '@nestjs/config'
-import { ExtractJwt } from 'passport-jwt'
 import { UserPayloadDTO } from 'src/resolvers/auth/dto/user.dto'
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private configService: ConfigService) {
     const secret = configService.get<string>('secret.jwt')
     if (!secret) {

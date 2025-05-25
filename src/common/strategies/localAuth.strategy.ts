@@ -8,7 +8,7 @@ import { UserPayloadDTO } from 'src/resolvers/auth/dto/user.dto'
 export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super({
-      emailField: 'email',
+      usernameField: 'email',
       passwordField: 'password',
     })
   }
