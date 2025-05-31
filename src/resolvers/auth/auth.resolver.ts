@@ -6,13 +6,11 @@ import { User } from 'src/entity/user.entity'
 import { UserService } from 'src/services/user/user.service'
 import { CreateUserDTO } from 'src/resolvers/user/dto/createUser.dto'
 import { LoginResponseDTO, UserPayloadDTO } from './dto/user.dto'
-import { ConfigService } from '@nestjs/config'
 import { JwtUtil } from 'src/common/utils/jwt.util'
 
 @Resolver(() => User)
 export class AuthResolver {
   constructor(
-    private configService: ConfigService,
     private jwtUtil: JwtUtil,
     private readonly userService: UserService,
   ) {}
