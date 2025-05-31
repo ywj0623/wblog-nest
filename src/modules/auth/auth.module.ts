@@ -12,5 +12,6 @@ import { JwtUtilModule } from 'src/modules/jwt/jwt.module'
 @Module({
   imports: [UserModule, PassportModule.register({ defaultStrategy: 'local' }), ConfigModule, JwtUtilModule],
   providers: [AuthService, AuthResolver, JwtService, LocalStrategy, JwtStrategy],
+  exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}

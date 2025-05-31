@@ -45,12 +45,6 @@ export class AuthResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => LoginResponseDTO, { name: 'login' })
   login(@Args('email') email: string, @Args('password') password: string, @UserPayload() user: UserPayloadDTO) {
-    const secret = this.configService.get<string>('secret.jwt')
-
-    if (!secret) {
-      throw new Error('Jwt secret is not defined')
-    }
-
     const token = this.jwtUtil.generateToken(user)
 
     return {
