@@ -6,10 +6,12 @@ import { Post, PostSchema } from 'src/entity/post.entity'
 import { StaticDataModule } from '../staticData/staticData.module'
 import { StaticDataService } from 'src/services/staticData/staticData.service'
 import { StaticDataResolver } from 'src/resolvers/staticData/staticData.resolver'
+import { AuthModule } from '../auth/auth.module'
 
 @Module({
   imports: [
     StaticDataModule,
+    AuthModule,
     MongooseModule.forFeature([
       {
         name: Post.name,

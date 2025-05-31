@@ -44,8 +44,16 @@ export class PostService {
   }
 
   async createPost(createPostDTO: CreatePostDTO, userId: MongooseSchema.Types.ObjectId): Promise<Post> {
+    // 找到 draft 狀態的 StaticData ObjectId
+    // const draftStatus = await this.staticDataModel.findOne({ type: 'postStatus', key: 'draft' }).exec()
+
+    // if (!draftStatus) {
+    //   throw new BadRequestException('Draft status not found in static data')
+    // }
+
     const newPost = await this.postModel.create({
       ...createPostDTO,
+      // status: draftStatus._id, // 設置默認狀態為 draft
       author: userId, // Set author to the userId from the token
     })
     return newPost.save()

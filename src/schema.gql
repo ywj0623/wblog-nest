@@ -2,6 +2,34 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Post {
+  """文章 ID"""
+  _id: String!
+
+  """文章標題"""
+  title: String!
+
+  """文章簡介"""
+  description: String
+
+  """內文"""
+  body: String
+
+  """作者"""
+  author: String!
+
+  """刊登日"""
+  date_created: DateTime!
+
+  """最後更新日"""
+  date_updated: DateTime
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type StaticData {
   """資料分類"""
   type: String!
@@ -27,40 +55,6 @@ type User {
   password: String!
 }
 
-type Post {
-  """文章 ID"""
-  _id: String!
-
-  """文章標題"""
-  title: String!
-
-  """文章簡介"""
-  description: String
-
-  """分類"""
-  category: String!
-
-  """文章狀態"""
-  status: String!
-
-  """內文"""
-  body: String
-
-  """作者"""
-  author: String!
-
-  """刊登日"""
-  date_created: DateTime!
-
-  """最後更新日"""
-  date_updated: DateTime
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
 type LoginResponseDTO {
   token: String!
   user: User!
@@ -83,14 +77,8 @@ type Mutation {
     """文章簡介"""
     description: String
 
-    """文章分類"""
-    category: String!
-
     """內文"""
     body: String
-
-    """刊登日"""
-    date_posted: DateTime!
   ): Post!
   editPost(
     """文章標題"""
@@ -99,14 +87,8 @@ type Mutation {
     """文章簡介"""
     description: String
 
-    """文章分類"""
-    category: String
-
     """內文"""
     body: String
-
-    """刊登日"""
-    date_posted: DateTime
 
     """文章 ID"""
     _id: String!

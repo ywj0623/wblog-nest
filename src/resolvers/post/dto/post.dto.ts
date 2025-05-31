@@ -1,24 +1,26 @@
 import { ArgsType, Field, PartialType } from '@nestjs/graphql'
 import { Schema as MongooseSchema } from 'mongoose'
+import { IsString, IsOptional, IsNotEmpty } from 'class-validator'
 
 @ArgsType()
 export class CreatePostDTO {
   @Field({ description: '文章標題', nullable: false })
+  @IsString()
+  @IsNotEmpty()
   title: string
 
   @Field({ description: '文章簡介', nullable: true })
+  @IsString()
+  @IsOptional()
   description?: string
 
-  @Field({ description: '文章分類', nullable: false })
-  category: string
+  // @Field(() => String, { description: '文章分類', nullable: false })
+  // category: string
 
   @Field({ description: '內文', nullable: true })
+  @IsString()
+  @IsOptional()
   body: string
-
-  // author field is removed as it will be set from the authenticated user
-
-  @Field({ description: '刊登日', nullable: false })
-  date_posted: Date
 }
 
 @ArgsType()
