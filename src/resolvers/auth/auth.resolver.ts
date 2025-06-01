@@ -58,4 +58,20 @@ export class AuthResolver {
       user: user,
     }
   }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => Boolean, { name: 'logout' })
+  async logout(@UserPayload() user: UserPayloadDTO) {
+    if (!user || !user._id) {
+      throw new BadRequestException('User not found')
+    }
+
+    const token = await this.tokenService.refreshToken(user._id, '', '')
+
+    if (!token) {
+      throw new BadRequestException('Failed to logout')
+    }
+
+    return true
+  }
 }

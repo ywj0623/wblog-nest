@@ -136,4 +136,5 @@ type Mutation {
     confirmPassword: String!
   ): LoginResponseDTO!
   login(email: String!, password: String!): LoginResponseDTO!
+  logout: Boolean!
 }
