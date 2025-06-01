@@ -12,9 +12,10 @@ import { PostModule } from 'src/modules/post/post.module'
 import { UserModule } from 'src/modules/user/user.module'
 import { AuthModule } from 'src/modules/auth/auth.module'
 import { StaticDataModule } from './staticData/staticData.module'
+import { TokenModule } from 'src/modules/token/token.module'
 import jwtConfig from 'src/config/jwt.config'
 
-@Module({ imports: [PostModule, UserModule, AuthModule, StaticDataModule] })
+@Module({ imports: [PostModule, UserModule, AuthModule, StaticDataModule, TokenModule] })
 export class APIModule {}
 
 @Module({
