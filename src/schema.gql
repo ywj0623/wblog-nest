@@ -67,6 +67,7 @@ type Query {
   findByType(type: String!): [StaticData!]!
   findByTypeAndKey(type: String!, key: String!): StaticData!
   checkEmail(email: String!): Boolean!
+  getToken(userId: String!): String!
 }
 
 type Mutation {

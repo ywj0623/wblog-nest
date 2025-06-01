@@ -8,9 +8,10 @@ import { AuthResolver } from 'src/resolvers/auth/auth.resolver'
 import { AuthService } from 'src/services/auth/auth.service'
 import { ConfigModule } from '@nestjs/config'
 import { JwtUtilModule } from 'src/modules/jwt/jwt.module'
+import { TokenModule } from 'src/modules/token/token.module'
 
 @Module({
-  imports: [UserModule, PassportModule.register({ defaultStrategy: 'local' }), ConfigModule, JwtUtilModule],
+  imports: [UserModule, PassportModule.register({ defaultStrategy: 'local' }), ConfigModule, JwtUtilModule, TokenModule],
   providers: [AuthService, AuthResolver, JwtService, LocalStrategy, JwtStrategy],
   exports: [JwtStrategy, PassportModule],
 })
