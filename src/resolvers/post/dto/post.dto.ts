@@ -1,6 +1,6 @@
 import { ArgsType, Field, PartialType } from '@nestjs/graphql'
-import { Schema as MongooseSchema } from 'mongoose'
 import { IsString, IsOptional, IsNotEmpty } from 'class-validator'
+import { Schema as MongooseSchema } from 'mongoose'
 
 @ArgsType()
 export class CreatePostDTO {
@@ -26,5 +26,7 @@ export class CreatePostDTO {
 @ArgsType()
 export class UpdatePostDTO extends PartialType(CreatePostDTO) {
   @Field(() => String, { description: '文章 ID', nullable: false })
-  _id: MongooseSchema.Types.ObjectId
+  @IsString()
+  @IsNotEmpty()
+  id: MongooseSchema.Types.ObjectId
 }

@@ -40,7 +40,7 @@ export class PostResolver {
   @UseGuards(JwtGuard)
   @Mutation(() => Post, { name: 'editPost' })
   editPost(@Args() args: UpdatePostDTO, @UserPayload() user: UserPayloadDTO) {
-    return this.postService.editPost(args._id, args, user._id)
+    return this.postService.editPost(args.id, args, user._id)
   }
 
   @UseGuards(JwtGuard)

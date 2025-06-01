@@ -91,7 +91,7 @@ type Mutation {
     body: String
 
     """文章 ID"""
-    _id: String!
+    id: String!
   ): Post!
   deletePost(id: String!): Post!
   createStaticData(
