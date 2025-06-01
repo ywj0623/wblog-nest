@@ -6,13 +6,11 @@ import { User } from 'src/entity/user.entity'
 import { UserService } from 'src/services/user/user.service'
 import { CreateUserDTO } from 'src/resolvers/user/dto/createUser.dto'
 import { LoginResponseDTO, UserPayloadDTO } from './dto/user.dto'
-import { JwtUtil } from 'src/common/utils/jwt.util'
 import { TokenService } from 'src/services/token/token.service'
 
 @Resolver(() => User)
 export class AuthResolver {
   constructor(
-    private jwtUtil: JwtUtil,
     private readonly userService: UserService,
     private readonly tokenService: TokenService,
   ) {}
@@ -34,13 +32,10 @@ export class AuthResolver {
     }
 
     const newUser = await this.userService.createUser(args)
-    const accessToken = this.jwtUtil.generateAccessToken(newUser)
-    const refreshToken = this.jwtUtil.generateRefreshToken(newUser)
-
-    await this.tokenService.createToken(newUser._id, refreshToken, accessToken)
+    const result = await this.tokenService.createToken(newUser)
 
     return {
-      token: accessToken,
+      token: result.access_token,
       user: newUser,
     }
   }
@@ -48,13 +43,10 @@ export class AuthResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => LoginResponseDTO, { name: 'login' })
   async login(@Args('email') email: string, @Args('password') password: string, @UserPayload() user: UserPayloadDTO) {
-    const accessToken = this.jwtUtil.generateAccessToken(user)
-    const refreshToken = this.jwtUtil.generateRefreshToken(user)
-
-    await this.tokenService.refreshToken(user._id, refreshToken, accessToken)
+    const result = await this.tokenService.refreshToken(user)
 
     return {
-      token: accessToken,
+      token: result.access_token,
       user: user,
     }
   }
@@ -62,11 +54,11 @@ export class AuthResolver {
   @UseGuards(GqlAuthGuard)
   @Mutation(() => Boolean, { name: 'logout' })
   async logout(@UserPayload() user: UserPayloadDTO) {
-    if (!user || !user._id) {
+    if (!user) {
       throw new BadRequestException('User not found')
     }
 
-    const token = await this.tokenService.refreshToken(user._id, '', '')
+    const token = await this.tokenService.refreshToken(user)
 
     if (!token) {
       throw new BadRequestException('Failed to logout')
