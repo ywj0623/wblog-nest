@@ -10,7 +10,7 @@ export class JwtUtil {
     private jwtService: JwtService,
   ) {}
 
-  generateToken(user: UserPayloadDTO): string {
+  generateRefreshToken(user: UserPayloadDTO): string {
     const secret = this.configService.get<string>('secret.jwt')
 
     if (!secret) {
@@ -18,5 +18,15 @@ export class JwtUtil {
     }
 
     return this.jwtService.sign({ ...user }, { secret: secret })
+  }
+
+  generateAccessToken(user: UserPayloadDTO): string {
+    const secret = this.configService.get<string>('secret.jwt')
+
+    if (!secret) {
+      throw new Error('Jwt secret is not defined')
+    }
+
+    return this.jwtService.sign({ ...user }, { secret: secret, expiresIn: '15s' })
   }
 }
